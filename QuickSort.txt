@@ -1,0 +1,46 @@
+	#include <iostream>
+	using namespace std;
+
+	int partition(int input[], int start, int end){
+		int pivot = input[start];
+		int cnt=0;
+		for(int i=start+1;i<=end;i++){
+			if(input[i]<=pivot){
+				cnt++;
+			}
+		}
+		int pivotindex = start+cnt;
+		swap(input[pivotindex], input[start]);
+
+		int i = start, j=end;
+		while(i < pivotindex and j > pivotindex){
+			while(input[i]<=pivot){
+				i++;
+			}
+			while(input[j]>pivot){
+				j--;
+			}
+			if(i<pivotindex and j>pivotindex){
+				swap(input[i++], input[j--]);
+			}
+		}
+		return pivotindex;
+	}
+
+
+	void qSort(int input[], int start, int end)
+	{
+    		// your code goes here
+			if(start>=end){
+				return;
+			} 
+			int p = 	partition(input, start, end);
+
+			qSort(input, start, p-1);
+			qSort(input, p+1, end);
+	}
+	void quickSort(int input[], int size)
+	{
+    		qSort(input, 0, size - 1);
+	}
+		
