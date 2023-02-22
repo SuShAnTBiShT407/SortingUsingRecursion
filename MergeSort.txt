@@ -1,0 +1,54 @@
+
+void merge(int input[], int si, int se) {
+  int mid = (si + se) / 2;
+
+  int len1 = mid - si + 1;
+  int len2 = se - mid;
+
+  int *first = new int[len1];
+  int *second = new int[len2];
+
+  int k = si;
+  for (int i = 0; i < len1; i++) {
+    first[i] = input[k++];
+  }
+  k = mid + 1;
+  for (int i = 0; i < len2; i++) {
+    second[i] = input[k++];
+  }
+
+  int index1 = 0;
+  int index2 = 0;
+  k = si;
+
+  while (index1 < len1 and index2 < len2) {
+    if (first[index1] < second[index2]) {
+      input[k++] = first[index1++];
+    } else {
+      input[k++] = second[index2++];
+    }
+  }
+
+  while (index1 < len1) {
+    input[k++] = first[index1++];
+  }
+  while (index2 < len2) {
+    input[k++] = second[index2++];
+  }
+}
+
+void solve(int input[], int si, int se) {
+  if (si >= se)
+    return;
+  int mid = (si + se) / 2;
+  solve(input, si, mid);
+  solve(input, mid + 1, se);
+  merge(input, si, se);
+}
+
+void mergeSort(int input[], int size) {
+  // Write your code here
+  int index = 0;
+  int se = size - 1;
+  solve(input, index, se);
+}
